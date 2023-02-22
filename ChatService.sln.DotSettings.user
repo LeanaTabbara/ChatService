@@ -2,9 +2,36 @@
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/Users/rimbarakat/Library/Caches/JetBrains/Rider2022.3/resharper-host/temp/Rider/vAny/CoverageData/_ChatService.1271745549/Snapshot/snapshot.utdcvr</s:String>
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3eea71fc_002Dbca5_002D49d5_002D951d_002D02e91ff1d541/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PostImage" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3eea71fc_002Dbca5_002D49d5_002D951d_002D02e91ff1d541/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PostImage" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.PostImage&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.GetProfile_NotFound&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=991e3527_002D330a_002D4df5_002D8e09_002D2418b12c051e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetNonExistingProfile" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.GetNonExistingProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.UpsertProfile_InvalidArgs&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.DeleteProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.DeleteNonExistingProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.GetImage&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.GetImage_NotFound&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.GetImage_InvalidArgs&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.PostImage&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.UploadImage&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.AddProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.UpdateExistingProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.GetImage_InvalidArgs&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b44f1716_002De314_002D4153_002D807a_002D6eeced746a08/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PostImage #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.PostImage&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::664DEFE8-1DDD-48CF-90AC-0DED69317850::net6.0::ChatService.Tests.Controllers.ChatControllerTests.GetImage_NotFound&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.UpdateExistingProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.AddNewProfile&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::0F9067B3-0E9C-4498-87C4-18CEB5754085::net6.0::ChatService.IntegrationTests.CosmosProfileStoreTest.GetNonExistingProfile&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	

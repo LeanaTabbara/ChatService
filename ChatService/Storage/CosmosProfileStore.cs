@@ -114,6 +114,13 @@ public class CosmosProfileStore : IProfileStore
 
     public async Task<FileContentResult?> DownloadImage(string imageId)
     {
+        if (imageId == null ||
+            string.IsNullOrWhiteSpace(imageId) 
+           )
+        {
+            throw new ArgumentException($"Invalid image id {imageId}");
+        }
+
         var blobClient = _blobContainerClient.GetBlobClient(imageId);
         try
         {
@@ -133,6 +140,7 @@ public class CosmosProfileStore : IProfileStore
         {
             return null;
         }
+        
         
     }
 }
