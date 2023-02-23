@@ -314,7 +314,7 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
         }.ToString();
         UploadImageRequest request = new UploadImageRequest(file);
         UploadImageResponse response = new UploadImageResponse("anything");
-        _profileStoreMock.Setup(m => m.UploadImage(request))
+        _profileStoreMock.Setup(m => m.UploadImage(It.IsAny<UploadImageRequest>()))
             .ReturnsAsync(response);
         
         HttpContent fileStreamContent = new StreamContent(stream); // assuming you have your data in a stream
