@@ -3146,6 +3146,7 @@
         "dependencies": {
           "Azure.Identity": "1.9.0-beta.1",
           "Azure.Storage.Blobs": "12.15.0-beta.1",
+          "Microsoft.AspNetCore.Mvc.Testing": "6.0.0",
           "Microsoft.Azure.Cosmos": "3.32.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
@@ -9639,19 +9640,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/rimbarakat/.nuget/packages/": {}
+    "/Users/leanatabbara/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.IntegrationTests/ChatService.IntegrationTests.csproj",
+      "projectUniqueName": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.IntegrationTests/ChatService.IntegrationTests.csproj",
       "projectName": "ChatService.IntegrationTests",
-      "projectPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.IntegrationTests/ChatService.IntegrationTests.csproj",
-      "packagesPath": "/Users/rimbarakat/.nuget/packages/",
-      "outputPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.IntegrationTests/obj/",
+      "projectPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.IntegrationTests/ChatService.IntegrationTests.csproj",
+      "packagesPath": "/Users/leanatabbara/.nuget/packages/",
+      "outputPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.IntegrationTests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/rimbarakat/.nuget/NuGet/NuGet.Config"
+        "/Users/leanatabbara/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -9663,8 +9664,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj": {
-              "projectPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj"
+            "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj": {
+              "projectPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj"
             }
           }
         }

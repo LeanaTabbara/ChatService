@@ -7,7 +7,8 @@ public record Profile(
     [Required] string firstName, 
     [Required] string lastName,
     [Required] string profilePictureId);
-    
+
+
 public record UploadImageRequest(IFormFile File);
 
 public record UploadImageResponse([Required] string imageId);

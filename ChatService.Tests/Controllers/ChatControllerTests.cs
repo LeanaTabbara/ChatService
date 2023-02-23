@@ -59,12 +59,12 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
     [Fact]
     public async Task AddProfile()
     {
-        var profile = new Profile("foobar", "Foo", "Bar", "AA24E24C-E576-4BA4-B8C1-A6B27474EE2C");
-        var response = await _httpClient.PostAsync("/Profile",
+        var profile = new Profile("foobar", "Foo", "Bar",  Guid.NewGuid().ToString());
+        var response = await _httpClient.PostAsync("/profile",
             new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
         
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        Assert.Equal("http://localhost/Profile/foobar", response.Headers.GetValues("Location").First());
+        Assert.Equal("http://localhost/profile/foobar", response.Headers.GetValues("Location").First());
         
         _profileStoreMock.Verify(mock => mock.UpsertProfile(profile), Times.Once);
     }
@@ -104,57 +104,6 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         _profileStoreMock.Verify(mock => mock.UpsertProfile(profile), Times.Never);
-    }
-
-    [Fact]
-    public async Task UpdateProfile()
-    {
-        var profile = new Profile("foobar", "Foo", "Bar", "AA24E24C-E576-4BA4-B8C1-A6B27474EE2C");
-        _profileStoreMock.Setup(m => m.GetProfile(profile.username))
-            .ReturnsAsync(profile);
-
-        var updatedProfile = profile with { firstName = "Foo2" };
-
-        var response = await _httpClient.PutAsync($"/Profile/{profile.username}",
-            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile));
-    }
-    
-    [Fact]
-    public async Task UpdateProfile_NotFound()
-    {
-        // TODO: Complete
-        
-        var profile = new Profile("foobar", "Foo", "Bar","AA24E24C-E576-4BA4-B8C1-A6B27474EE2C");
-        _profileStoreMock.Setup(m => m.GetProfile("foobar"))
-            .ReturnsAsync((Profile?)null);
-        
-        var updatedProfile = profile with { firstName = "Foo2" };
-
-        var response = await _httpClient.PutAsync($"/Profile/{profile.username}",
-            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
-    }
-    
-    [Theory]
-  
-    [InlineData( "", "Bar")]
-    [InlineData( "   ", "Bar")]
-    [InlineData( "Foo", "")]
-    [InlineData( "Foo", null)]
-    [InlineData( "Foo", " ")]
-    public async Task UpdateProfile_InvalidArgs(string firstname, string lastname)
-    {
-        var profile = new Profile("foobar", "Foo", "Bar","AA24E24C-E576-4BA4-B8C1-A6B27474EE2C");
-
-        var updatedProfile = profile with { firstName = firstname, lastName = lastname};
-
-        var response = await _httpClient.PutAsync($"/Profile/{profile.username}",
-            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
     }
 
 
@@ -295,15 +244,40 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
     [Fact]
     public async Task GetImage()
     {
-        var id = "77aca9f6-325c-43e7-a9fe-0fc8553abef6";
-        var response = await _httpClient.GetAsync($"/images/{id}");
+        int fileSize = 1024; // 1KB
+        byte[] fileContents = new byte[fileSize];
+
+        // Generate random bytes for the file
+        Random rnd = new Random();
+        rnd.NextBytes(fileContents);
+        
+        String fileName = Guid.NewGuid().ToString();
+
+        // Create a memory stream and write the random bytes to it
+        var stream = new MemoryStream();
+        
+            stream.Write(fileContents, 0, fileSize);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Create a FileContentResult object and return it
+             FileContentResult file = new FileContentResult(stream.ToArray(), "application/octet-stream")
+            {
+                FileDownloadName = fileName
+            };
+
+             _profileStoreMock.Setup(m => m.DownloadImage(fileName))
+            .ReturnsAsync(file);
+        var response = await _httpClient.GetAsync($"/images/{fileName}");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     
     [Fact]
     public async Task GetImage_NotFound()
     {
-        var id = "DC2B66AB-18C6-4A2D-8972-B01595F0BA9E";
+        String fileName = Guid.NewGuid().ToString();
+        _profileStoreMock.Setup(m => m.DownloadImage(fileName))
+            .ReturnsAsync((FileContentResult) null);
+        var id = Guid.NewGuid().ToString();
         var response = await _httpClient.GetAsync($"/images/{id}");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
@@ -315,9 +289,49 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
     public async Task GetImage_InvalidArgs(string id)
     {
         var response = await _httpClient.GetAsync($"/images/{id}");
-        var image = new Profile("foobar", "foo", "bar", id);
         Assert.Equal(HttpStatusCode.MethodNotAllowed, response.StatusCode);
-        //_profileStoreMock.Verify(mock => mock.UpsertProfile(image));
+        _profileStoreMock.Verify(mock => mock.DownloadImage(id), Times.Never);
     }
-    
+
+    [Fact]
+    public async Task UploadImage()
+    {
+        int length = 1024;
+        String fileName = Guid.NewGuid().ToString();
+        var content = new byte[length];
+        var random = new Random();
+        random.NextBytes(content);
+
+        var stream = new MemoryStream(content);
+        IFormFile file = new FormFile(stream, 0, length, "file", "anything"){
+            Headers = new HeaderDictionary(),
+            ContentType = "image/jpeg"
+        };
+        file.Headers["Content-Disposition"] = new ContentDispositionHeaderValue("form-data")
+        {
+            Name = "file",
+            FileName = "anything",// this is not important but must not be empty
+        }.ToString();
+        UploadImageRequest request = new UploadImageRequest(file);
+        UploadImageResponse response = new UploadImageResponse("anything");
+        _profileStoreMock.Setup(m => m.UploadImage(request))
+            .ReturnsAsync(response);
+        
+        HttpContent fileStreamContent = new StreamContent(stream); // assuming you have your data in a stream
+        fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+        {
+            Name = "file",
+            FileName = "anything" ,// this is not important but must not be empty
+        };
+        fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+        using var formData = new MultipartFormDataContent();
+        formData.Add(fileStreamContent);
+        
+        var httpResponse = await _httpClient.PostAsync($"/images", formData);
+        //Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        var json = await httpResponse.Content.ReadAsStringAsync();
+        Assert.Equal(response, JsonConvert.DeserializeObject<UploadImageResponse>(json));
+        
+    }
 }

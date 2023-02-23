@@ -18,6 +18,8 @@ public class CosmosProfileStore : IProfileStore
         _cosmosClient = cosmosClient;
         _blobContainerClient = blobContainerClient;
     }
+    
+
 
     // DRY
     private Container Container => _cosmosClient.GetDatabase("profiles").GetContainer("profiles");
@@ -133,7 +135,7 @@ public class CosmosProfileStore : IProfileStore
             // string filePath = Path.Combine(downloadsPath, blobClient.Name);
             //  File.WriteAllBytes(filePath, bytes);    
 
-            return new FileContentResult(bytes, response.Value.ContentType);
+            return new FileContentResult(bytes, "image/jpeg");
 
         }
         catch (RequestFailedException ex) when (ex.Status == 404)

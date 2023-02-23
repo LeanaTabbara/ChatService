@@ -35,6 +35,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
         _store = factory.Services.GetRequiredService<IProfileStore>();
     }
     
+    
     [Fact]
     public async Task AddNewProfile()
     {
@@ -51,7 +52,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task UpdateExistingProfile()
     {
-        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:"4372D709-4CFA-4EF3-9FF8-7359E56F83CD");
+        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:Guid.NewGuid().ToString());
         await _store.UpsertProfile(profile);
 
         var updatedProfile = profile with { firstName = "Foo1", lastName = "Foo2" };
@@ -85,7 +86,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task DeleteProfile()
     {
-        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:"4372D709-4CFA-4EF3-9FF8-7359E56F83CD");
+        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:Guid.NewGuid().ToString());
         await _store.UpsertProfile(profile);
 
         Assert.Equal(profile, await _store.GetProfile(profile.username));
@@ -99,7 +100,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task DeleteNonExistingProfile()
     {
-        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:"4372D709-4CFA-4EF3-9FF8-7359E56F83CD");
+        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar", profilePictureId:Guid.NewGuid().ToString());
       
         await _store.DeleteProfile(profile.username);
         
@@ -113,14 +114,15 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task GetImage()
     {
-        var id = "77aca9f6-325c-43e7-a9fe-0fc8553abef6";
+        
+        var id = "77aca9f6-325c-43e7-a9fe-0fc8553abef6"; //should upload an image then downlaod it 
         Assert.NotNull(await _store.DownloadImage(id));
     }
     
     [Fact]
     public async Task GetImage_NotFound()
     {
-        var id = "9F486090-BA72-4B58-A1B1-FF3606C4CE9D";
+        var id = Guid.NewGuid().ToString();
         Assert.Null(await _store.DownloadImage(id));
     }
     
@@ -137,45 +139,70 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
         
     }
     
-    [Fact]
-    public async Task UploadImage()
-    {
-        int width = 100;
-        int height = 100;
-        int channels = 3; // RGB
+   //  [Fact]
+   // // public async Task UploadImage()
+   //  {
+   //      int width = 100;
+   //      int height = 100;
+   //      int channels = 3; // RGB
+   //
+   //      byte[] imageBytes = new byte[width * height * channels];
+   //
+   //      for (int y = 0; y < height; y++)
+   //      {
+   //          for (int x = 0; x < width; x++)
+   //          {
+   //              int offset = (y * width + x) * channels;
+   //
+   //              imageBytes[offset] = (byte)(255 * x / width);          // R channel
+   //              imageBytes[offset + 1] = (byte)(255 * y / height);     // G channel
+   //              imageBytes[offset + 2] = (byte)(255 * (x + y) / (width + height)); // B channel
+   //          }
+   //      }
+   //
+   //      MemoryStream stream = new MemoryStream(imageBytes);
+   //      HttpContent fileStreamContent = new StreamContent(stream); 
+   //      fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+   //      {
+   //          Name = "file",
+   //          FileName = "anything" // this is not important but must not be empty
+   //      };
+   //      using var formData = new MultipartFormDataContent();
+   //      formData.Add(fileStreamContent);
+   //      string fileContents = await fileStreamContent.ReadAsStringAsync();
+   //      IFormFile file = new FormFile(stream, 0, imageBytes.Length, 
+   //          fileStreamContent.Headers.ContentDisposition.FileName.Trim('"'), 
+   //          fileStreamContent.Headers.ContentType.MediaType);
+   //      UploadImageRequest res = new UploadImageRequest(file);
+   //      Assert.NotNull(await _store.UploadImage(res));
+   //
+   //  }
 
-        byte[] imageBytes = new byte[width * height * channels];
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int offset = (y * width + x) * channels;
+   [Fact]
+   public async Task UploadImage()
+   {
+       int length = 1024;
+       //String fileName = Guid.NewGuid().ToString();
+       var content = new byte[length];
+       var random = new Random();
+       random.NextBytes(content);
 
-                imageBytes[offset] = (byte)(255 * x / width);          // R channel
-                imageBytes[offset + 1] = (byte)(255 * y / height);     // G channel
-                imageBytes[offset + 2] = (byte)(255 * (x + y) / (width + height)); // B channel
-            }
-        }
-
-        MemoryStream stream = new MemoryStream(imageBytes);
-        HttpContent fileStreamContent = new StreamContent(stream); 
-        fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-        {
-            Name = "file",
-            FileName = "anything" // this is not important but must not be empty
-        };
-        using var formData = new MultipartFormDataContent();
-        formData.Add(fileStreamContent);
-        string fileContents = await fileStreamContent.ReadAsStringAsync();
-        IFormFile file = new FormFile(stream, 0, imageBytes.Length, 
-            fileStreamContent.Headers.ContentDisposition.FileName.Trim('"'), 
-            fileStreamContent.Headers.ContentType.MediaType);
-        UploadImageRequest res = new UploadImageRequest(file);
-        Assert.NotNull(await _store.UploadImage(res));
-
-    }
-    
-    
-    
+       var stream = new MemoryStream(content);
+       IFormFile file = new FormFile(stream, 0, length, "file", "anything"){
+           Headers = new HeaderDictionary(),
+           ContentType = "image/jpeg"
+       };
+       file.Headers["Content-Disposition"] = new ContentDispositionHeaderValue("form-data")
+       {
+           Name = "file",
+           FileName = "anything",// this is not important but must not be empty
+       }.ToString();
+       UploadImageRequest request = new UploadImageRequest(file);
+       
+       var requestResult = await _store.UploadImage(request);
+       var result = await _store.DownloadImage(requestResult.imageId);
+       Assert.Equal(request.File.Length, result.FileContents.Length);
+       Assert.Equal(request.File.ContentType , result.ContentType);
+   }
 }

@@ -45,20 +45,37 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<UploadImageResponse>>
         UploadImage([FromForm] UploadImageRequest request)
     {
-        return await _profileStore.UploadImage(request);
+        if (request == null)
+        {
+            throw new ArgumentException("The file can't be null");
+    
+        }
+        else
+        {
+            return await _profileStore.UploadImage(request);
+        }
+    
     }
     
     [HttpGet("/images/{id}")]
     public async Task<IActionResult>
         DownloadImage(string id)
     {
-         var file=  await _profileStore.DownloadImage(id);
-          if (file == null)
-          {
-              Console.WriteLine("i'm here");
-              return NotFound($"An image with imageId {id} was not found");
-          }
-          return Ok(file);
+        if (id == null || string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException($"Invalid imageId ");
+        }
+        else
+        {
+            var file=  await _profileStore.DownloadImage(id);
+            if (file == null)
+            {
+                Console.WriteLine("i'm here");
+                return NotFound($"An image with imageId {id} was not found");
+            }
+            return Ok(file);
+        }
+         
     }
     
 

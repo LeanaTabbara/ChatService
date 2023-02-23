@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.Tests/ChatService.Tests.csproj": {}
+    "/Users/leanatabbara/RiderProjects/ChatService/ChatService.Tests/ChatService.Tests.csproj": {}
   },
   "projects": {
-    "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.Tests/ChatService.Tests.csproj": {
+    "/Users/leanatabbara/RiderProjects/ChatService/ChatService.Tests/ChatService.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.Tests/ChatService.Tests.csproj",
+        "projectUniqueName": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.Tests/ChatService.Tests.csproj",
         "projectName": "ChatService.Tests",
-        "projectPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.Tests/ChatService.Tests.csproj",
-        "packagesPath": "/Users/rimbarakat/.nuget/packages/",
-        "outputPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService.Tests/obj/",
+        "projectPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.Tests/ChatService.Tests.csproj",
+        "packagesPath": "/Users/leanatabbara/.nuget/packages/",
+        "outputPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/rimbarakat/.nuget/NuGet/NuGet.Config"
+          "/Users/leanatabbara/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -26,8 +26,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj": {
-                "projectPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj"
+              "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj": {
+                "projectPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj"
               }
             }
           }
@@ -101,17 +101,17 @@
         }
       }
     },
-    "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj": {
+    "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj",
+        "projectUniqueName": "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj",
         "projectName": "ChatService",
-        "projectPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/ChatService.csproj",
-        "packagesPath": "/Users/rimbarakat/.nuget/packages/",
-        "outputPath": "/Users/rimbarakat/Library/CloudStorage/OneDrive-AmericanUniversityofBeirut/rim/Spring2023/EECE503E/ChatService-main/ChatService/obj/",
+        "projectPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService/ChatService.csproj",
+        "packagesPath": "/Users/leanatabbara/.nuget/packages/",
+        "outputPath": "/Users/leanatabbara/RiderProjects/ChatService/ChatService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/rimbarakat/.nuget/NuGet/NuGet.Config"
+          "/Users/leanatabbara/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -142,6 +142,10 @@
             "Azure.Storage.Blobs": {
               "target": "Package",
               "version": "[12.15.0-beta.1, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.Azure.Cosmos": {
               "target": "Package",
