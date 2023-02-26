@@ -107,11 +107,18 @@ public class CosmosProfileStore : IProfileStore
 
     public async Task<UploadImageResponse> UploadImage(UploadImageRequest imageRequest)
     {
-       
+
+        if (imageRequest.File.ContentType.ToLower() == "image/jpeg"
+            || imageRequest.File.ContentType.ToLower() == "image/png"
+            || imageRequest.File.ContentType.ToLower() == "image/webp")
+        {
             var gui = Guid.NewGuid();
-                await _blobContainerClient.UploadBlobAsync(gui.ToString(),
-                    imageRequest.File.OpenReadStream());
+            await _blobContainerClient.UploadBlobAsync(gui.ToString(),
+                imageRequest.File.OpenReadStream());
             return new UploadImageResponse(gui.ToString());
+        }
+
+        throw new ArgumentException("The content type of the image should be of jpeg, png or webp");
     }
 
     public async Task<FileContentResult?> DownloadImage(string imageId)
@@ -130,10 +137,7 @@ public class CosmosProfileStore : IProfileStore
             await using var memoryStream = new MemoryStream();
             await response.Value.Content.CopyToAsync(memoryStream);
             var bytes = memoryStream.ToArray();
-
-            // string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Downloads/";
-            // string filePath = Path.Combine(downloadsPath, blobClient.Name);
-            //  File.WriteAllBytes(filePath, bytes);    
+            
 
             return new FileContentResult(bytes, "image/jpeg");
 

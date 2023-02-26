@@ -138,48 +138,9 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
         });
         
     }
-    
-   //  [Fact]
-   // // public async Task UploadImage()
-   //  {
-   //      int width = 100;
-   //      int height = 100;
-   //      int channels = 3; // RGB
-   //
-   //      byte[] imageBytes = new byte[width * height * channels];
-   //
-   //      for (int y = 0; y < height; y++)
-   //      {
-   //          for (int x = 0; x < width; x++)
-   //          {
-   //              int offset = (y * width + x) * channels;
-   //
-   //              imageBytes[offset] = (byte)(255 * x / width);          // R channel
-   //              imageBytes[offset + 1] = (byte)(255 * y / height);     // G channel
-   //              imageBytes[offset + 2] = (byte)(255 * (x + y) / (width + height)); // B channel
-   //          }
-   //      }
-   //
-   //      MemoryStream stream = new MemoryStream(imageBytes);
-   //      HttpContent fileStreamContent = new StreamContent(stream); 
-   //      fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-   //      {
-   //          Name = "file",
-   //          FileName = "anything" // this is not important but must not be empty
-   //      };
-   //      using var formData = new MultipartFormDataContent();
-   //      formData.Add(fileStreamContent);
-   //      string fileContents = await fileStreamContent.ReadAsStringAsync();
-   //      IFormFile file = new FormFile(stream, 0, imageBytes.Length, 
-   //          fileStreamContent.Headers.ContentDisposition.FileName.Trim('"'), 
-   //          fileStreamContent.Headers.ContentType.MediaType);
-   //      UploadImageRequest res = new UploadImageRequest(file);
-   //      Assert.NotNull(await _store.UploadImage(res));
-   //
-   //  }
 
 
-   [Fact]
+    [Fact]
    public async Task UploadImage()
    {
        int length = 1024;
@@ -205,4 +166,5 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
        Assert.Equal(request.File.Length, result.FileContents.Length);
        Assert.Equal(request.File.ContentType , result.ContentType);
    }
+   
 }

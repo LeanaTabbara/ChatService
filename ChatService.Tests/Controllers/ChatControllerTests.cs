@@ -105,141 +105,7 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         _profileStoreMock.Verify(mock => mock.UpsertProfile(profile), Times.Never);
     }
-
-
-    // [Fact]
-    // public async Task PostImage()
-    // {
-    //     int width = 100;
-    //     int height = 100;
-    //     int channels = 3; // RGB
-    //
-    //     byte[] imageBytes = new byte[width * height * channels];
-    //
-    //     for (int y = 0; y < height; y++)
-    //     {
-    //         for (int x = 0; x < width; x++)
-    //         {
-    //             int offset = (y * width + x) * channels;
-    //
-    //             imageBytes[offset] = (byte)(255 * x / width);          // R channel
-    //             imageBytes[offset + 1] = (byte)(255 * y / height);     // G channel
-    //             imageBytes[offset + 2] = (byte)(255 * (x + y) / (width + height)); // B channel
-    //         }
-    //     }
-    //
-    //     MemoryStream stream = new MemoryStream(imageBytes);
-    //     HttpContent fileStreamContent = new StreamContent(stream); // assuming you have your data in a stream
-    //     fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-    //     {
-    //         Name = "file",
-    //         FileName = "anything" // this is not important but must not be empty
-    //     };
-    //
-    //     using var formData = new MultipartFormDataContent();
-    //     formData.Add(fileStreamContent);
-    //     var response = await _httpClient.PostAsync("images", formData);
-    //     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //
-    //     //try1
-    //     // string imagePath = "monkey.jpeg";
-    //     // string absolutePath = Path.Combine(AppContext.BaseDirectory, imagePath);
-    //     // using (FileStream fileStream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
-    //     // {
-    //     //     MemoryStream memoryStream = new MemoryStream();
-    //     //     await fileStream.CopyToAsync(memoryStream);
-    //     //     memoryStream.Seek(0, SeekOrigin.Begin);
-    //     //     FileStreamResult stream =  new FileStreamResult(memoryStream, "image/jpeg");
-    //     //     
-    //     //     HttpContent fileStreamContent = new StreamContent(stream.FileStream);
-    //     //     fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-    //     //     {
-    //     //         Name = "file",
-    //     //         FileName = "image_test" // this is not important but must not be empty
-    //     //     };
-    //     //     
-    //     //     using var formData = new MultipartFormDataContent();
-    //     //     formData.Add(fileStreamContent);
-    //     //     
-    //     //     var response = await _httpClient.PostAsync("/images", formData);
-    //     //     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //     //     
-    //     // }
-    //     
-    //     
-    //     //try2
-    //     //Stream imageStreamSource = new FileStream("monkey.jpeg", FileMode.Open, FileAccess.Read, FileShare.Read);
-    //     // string imagePath = "monkey.jpeg";
-    //     // string absolutePath = Path.Combine(AppContext.BaseDirectory, imagePath);
-    //     // //FileStream source = File.Open(absolutePath, FileMode.Open);
-    //     // using (FileStream fileStream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
-    //     // {
-    //     //     using (MemoryStream memoryStream = new MemoryStream())
-    //     //     {
-    //     //         await fileStream.CopyToAsync(memoryStream);
-    //     //         memoryStream.Seek(0, SeekOrigin.Begin);
-    //     //
-    //     //         FileStreamResult source = new FileStreamResult(memoryStream, "image/jpeg");
-    //     //         HttpContent fileStreamContent = new StreamContent(source.FileStream);
-    //     //         Console.WriteLine(source.FileStream);
-    //     //         fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-    //     //         {
-    //     //             Name = "file",
-    //     //             FileName = "image_test" // this is not important but must not be empty
-    //     //         };
-    //     //
-    //     //         using var formData = new MultipartFormDataContent();
-    //     //         formData.Add(fileStreamContent);
-    //     //
-    //     //         var response = await _httpClient.PostAsync("/images", formData);
-    //     //         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //     //     }
-    //     //
-    //     // }
-    //     
-    //     //try3
-    //     // var fileInfo = new FileInfo($"monkey.jpeg");
-    //     // var content = new MultipartFormDataContent();
-    //     // var file = new FileStream(fileInfo.FullName, FileMode.Open);
-    //     // var imageContent = new StreamContent(file);
-    //     // imageContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("multipart/form-data");
-    //     // content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("multipart/form-data");
-    //     // content.Add(imageContent, "image1", "monkey.jpeg");
-    //     //
-    //     // var response = await _httpClient.PostAsync($"/images", content);
-    //     // Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //     
-    //     
-    //     //try4
-    //     // int fileSize = 1024; // 1KB
-    //     // byte[] fileContents = new byte[fileSize];
-    //     //
-    //     // // Generate random bytes for the file
-    //     // Random rnd = new Random();
-    //     // rnd.NextBytes(fileContents);
-    //     //
-    //     // // Create a memory stream and write the random bytes to it
-    //     // using (var stream = new MemoryStream())
-    //     // {
-    //     //     stream.Write(fileContents, 0, fileSize);
-    //     //     stream.Seek(0, SeekOrigin.Begin);
-    //     //
-    //     //     // Create a FileContentResult object and return it
-    //     //     
-    //     //     HttpContent fileStreamContent = new StreamContent(stream);
-    //     //     fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-    //     //     {
-    //     //         Name = "file",
-    //     //         FileName = "image_test" // this is not important but must not be empty
-    //     //     };
-    //     //     
-    //     //     using var formData = new MultipartFormDataContent();
-    //     //     formData.Add(fileStreamContent);
-    //     //     var response = await _httpClient.PostAsync("/images", formData);
-    //     //     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //     // }
-    // }
-    //
+    
     
     [Fact]
     public async Task GetImage()
@@ -303,16 +169,6 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
         random.NextBytes(content);
 
         var stream = new MemoryStream(content);
-        IFormFile file = new FormFile(stream, 0, length, "file", "anything"){
-            Headers = new HeaderDictionary(),
-            ContentType = "image/jpeg"
-        };
-        file.Headers["Content-Disposition"] = new ContentDispositionHeaderValue("form-data")
-        {
-            Name = "file",
-            FileName = "anything",// this is not important but must not be empty
-        }.ToString();
-        UploadImageRequest request = new UploadImageRequest(file);
         UploadImageResponse response = new UploadImageResponse("anything");
         _profileStoreMock.Setup(m => m.UploadImage(It.IsAny<UploadImageRequest>()))
             .ReturnsAsync(response);
@@ -329,9 +185,19 @@ public class ChatControllerTests : IClassFixture<WebApplicationFactory<Program>>
         formData.Add(fileStreamContent);
         
         var httpResponse = await _httpClient.PostAsync($"/images", formData);
-        //Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         var json = await httpResponse.Content.ReadAsStringAsync();
         Assert.Equal(response, JsonConvert.DeserializeObject<UploadImageResponse>(json));
         
+    }
+
+    [Fact]
+    public async Task UploadNullRequest()
+    {
+        using var formData = new MultipartFormDataContent();
+        
+        var httpResponse = await _httpClient.PostAsync($"/images", formData);
+        Assert.Equal(HttpStatusCode.BadRequest, httpResponse.StatusCode);
+        _profileStoreMock.Verify(mock => mock.UploadImage(It.IsAny<UploadImageRequest>()), Times.Never);
     }
 }
