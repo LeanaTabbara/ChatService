@@ -167,4 +167,31 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
        Assert.Equal(request.File.ContentType , result.ContentType);
    }
    
+   [Fact]
+   public async Task UploadImageInvalidArgs()
+   {
+       int length = 1024;
+       //String fileName = Guid.NewGuid().ToString();
+       var content = new byte[length];
+       var random = new Random();
+       random.NextBytes(content);
+
+       var stream = new MemoryStream(content);
+       IFormFile file = new FormFile(stream, 0, length, "file", "anything"){
+           Headers = new HeaderDictionary(),
+           ContentType = "application/pdf"
+       };
+       file.Headers["Content-Disposition"] = new ContentDispositionHeaderValue("form-data")
+       {
+           Name = "file",
+           FileName = "anything",// this is not important but must not be empty
+       }.ToString();
+       UploadImageRequest request = new UploadImageRequest(file);
+       
+       await Assert.ThrowsAsync<ArgumentException>(async () =>
+       {
+           await _store.UploadImage(request);
+       });
+   }
+   
 }
